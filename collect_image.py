@@ -16,7 +16,7 @@ def cmd(cmd):
 parser = argparse.ArgumentParser()
 parser.add_argument('--data_dir',        type=str,   default='images')
 parser.add_argument('--num_of_pics',   type=int,   default=1500)
-parser.add_argument('--wnid',  type=int)
+parser.add_argument('--wnid',  type=str)
 
 args = parser.parse_args()
 
