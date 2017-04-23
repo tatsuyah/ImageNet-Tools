@@ -10,7 +10,7 @@ from PIL import Image
 import os.path
 
 def cmd(cmd):
-	return commands.getoutput(cmd)
+  return commands.getoutput(cmd)
 
 # arguments
 parser = argparse.ArgumentParser()
@@ -22,8 +22,8 @@ args = parser.parse_args()
 
 dict={}
 for line in open('words.txt', 'r'):
-	line=line.split()
-	dict[line[0]]=line[1]
+  line=line.split()
+  dict[line[0]]=line[1]
 
 ids = open('imagenet.synset.obtain_synset_list', 'r').read()
 ids = ids.split()
@@ -34,47 +34,46 @@ id = args.wnid
 category = dict[id]
 cnt = 0
 if len(category)>0:
-	cmd("mkdir %s/%s"%(args.data_dir,category))
-	print(category)
-	try:
-		urls=urlopen("http://www.image-net.org/api/text/imagenet.synset.geturls?wnid="+id).read()
-		urls=urls.split()
-		random.shuffle(urls)
+  cmd("mkdir %s/%s"%(args.data_dir,category))
+  print(category)
+  try:
+    urls=urlopen("http://www.image-net.org/api/text/imagenet.synset.geturls?wnid="+id).read()
+    urls=urls.split()
+    random.shuffle(urls)
 
-		j=0
-		while cnt<args.num_of_pics if args.num_of_pics<len(urls) else len(urls):
-			url = urls[j]
-			j+=1
-			if j>=len(urls):
-				break
-			print(url)
-
-			filename = os.path.split(url)[1]
-			try:
-				output = "%s/%s/%d_%s"%(args.data_dir,category,cnt,filename)
-				urlretrieve(url,output )
-				try:
-					img = Image.open(output)
-					size = os.path.getsize(output)
-					if size==2051: #flickr Error
-						cmd("rm %s"%output)
-						cnt-=1
-				except IOError:
-					cmd("rm %s"%output)
-					cnt-=1
-			except HTTPError, e:
-				cnt-=1
-				print e.reason
-			except URLError, e:
-				cnt-=1
-				print e.reason
-			except IOError, e:
-				cnt-=1
-				print e
-			cnt+=1
-	except HTTPError, e:
-		print e.reason
-	except URLError, e:
-		print e.reason
-	except IOError, e:
-		print e
+    j=0
+    while cnt<args.num_of_pics if args.num_of_pics<len(urls) else len(urls):
+      url = urls[j]
+      j+=1
+      if j>=len(urls):
+        break
+      print(url)
+      filename = os.path.split(url)[1]
+      try:
+        output = "%s/%s/%d_%s"%(args.data_dir,category,cnt,filename)
+        urlretrieve(url,output )
+        try:
+          img = Image.open(output)
+          size = os.path.getsize(output)
+          if size==2051: #flickr Error
+            cmd("rm %s"%output)
+            cnt-=1
+        except IOError:
+          cmd("rm %s"%output)
+          cnt-=1
+      except HTTPError, e:
+        cnt-=1
+        print e.reason
+      except URLError, e:
+        cnt-=1
+        print e.reason
+      except IOError, e:
+        cnt-=1
+        print e
+      cnt+=1
+  except HTTPError, e:
+    print e.reason
+  except URLError, e:
+    print e.reason
+  except IOError, e:
+    print e
