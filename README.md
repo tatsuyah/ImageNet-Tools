@@ -1,6 +1,6 @@
 ## Requirements
 
- * Python 2
+ * Python 2.7
 
 
 ## Usage
