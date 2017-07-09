@@ -7,6 +7,7 @@ import subprocess
 import argparse
 import random
 from PIL import Image
+import os
 import os.path
 
 def cmd(cmd):
@@ -28,6 +29,9 @@ for line in open('words.txt', 'r'):
 ids = open('imagenet.synset.obtain_synset_list', 'r').read()
 ids = ids.split()
 random.shuffle(ids)
+
+if(os.path.exists('./images/') == False):
+  os.mkdir('./images/')
 
 id = args.wnid
 
